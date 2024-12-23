@@ -14,7 +14,7 @@ public class CommandListener {
         return commandFactory.apply(line);
     }
 
-    public CommandListener(CommandFactory commandFactory) {
+    public CommandListener(CommandsFactory commandFactory) {
         keyboardListener = new Scanner(System.in);
         this.commandFactory = commandFactory;
     }
@@ -24,5 +24,5 @@ public class CommandListener {
     }
 
     private Scanner keyboardListener;
-    private final CommandFactory commandFactory;
+    private final CommandsFactory commandFactory;
 }

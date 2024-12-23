@@ -59,7 +59,7 @@ class CommandListenerTest {
     private Scanner scanner;
 
     @Mock
-    private CommandFactory commandFactory;
+    private CommandsFactory commandFactory;
 
     @Mock
     private GameCommand fooCommand;
