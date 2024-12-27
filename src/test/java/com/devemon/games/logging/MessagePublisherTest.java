@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
 
+import static org.mockito.Mockito.description;
 import static org.mockito.Mockito.verify;
 
 
@@ -18,7 +19,8 @@ class MessagePublisherTest {
     public void it_should_log_the_event() {
         messagePublisher.accept(MESSAGE);
 
-        verify(logger).info(MESSAGE);
+        verify(logger, description("It should log the event"))
+                .info(MESSAGE);
     }
 
 

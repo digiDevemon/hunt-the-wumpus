@@ -1,6 +1,6 @@
 package com.devemon.games.keyboard.commandAssemblers;
 
-import com.devemon.games.domain.GameCommand;
+import com.devemon.games.domain.commands.GameCommand;
 
 import java.util.Optional;
 import java.util.function.Function;

@@ -1,6 +1,6 @@
 package com.devemon.games.keyboard;
 
-import com.devemon.games.domain.GameCommand;
+import com.devemon.games.domain.commands.GameCommand;
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
@@ -14,7 +14,7 @@ public class CommandListener {
         return commandFactory.apply(line);
     }
 
-    public CommandListener(CommandsFactory commandFactory) {
+    public CommandListener(CommandFactory commandFactory) {
         keyboardListener = new Scanner(System.in);
         this.commandFactory = commandFactory;
     }
@@ -24,5 +24,5 @@ public class CommandListener {
     }
 
     private Scanner keyboardListener;
-    private final CommandsFactory commandFactory;
+    private final CommandFactory commandFactory;
 }

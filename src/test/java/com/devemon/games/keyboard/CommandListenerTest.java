@@ -1,6 +1,6 @@
 package com.devemon.games.keyboard;
 
-import com.devemon.games.domain.GameCommand;
+import com.devemon.games.domain.commands.GameCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,8 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Scanner;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class CommandListenerTest {
@@ -29,7 +28,7 @@ class CommandListenerTest {
     public void it_should_read_a_command_from_input() {
         setupCommandListener();
         commandListener.read();
-        verify(scanner).nextLine();
+        verify(scanner, description("It should read a command from input")).nextLine();
     }
 
     @Test
@@ -59,7 +58,7 @@ class CommandListenerTest {
     private Scanner scanner;
 
     @Mock
-    private CommandsFactory commandFactory;
+    private CommandFactory commandFactory;
 
     @Mock
     private GameCommand fooCommand;
