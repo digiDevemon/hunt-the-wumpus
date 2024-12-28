@@ -5,7 +5,7 @@
 
   <groupId>com.devemon.games</groupId>
   <artifactId>hunt-the-wumpus</artifactId>
-  <version>1.2.0-SNAPSHOT</version>
+  <version>1.2.1-SNAPSHOT</version>
 
   <name>hunt-the-wumpus</name>
   <url>http://www.example.com</url>
@@ -41,13 +41,6 @@
         <groupId>org.springframework</groupId>
         <artifactId>spring-framework-bom</artifactId>
         <version>${spring.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-lang3</artifactId>
-        <version>${apache.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -158,10 +151,6 @@
       <artifactId>spring-jcl</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-    </dependency>
   </dependencies>
 
   <build>

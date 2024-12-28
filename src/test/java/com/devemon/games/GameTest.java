@@ -6,13 +6,14 @@ import com.devemon.games.domain.elements.GameMap;
 import com.devemon.games.domain.elements.User;
 import com.devemon.games.keyboard.CommandListener;
 import com.devemon.games.logging.MessagePublisher;
-import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Map;
 
 import static org.mockito.Mockito.*;
 
@@ -56,7 +57,7 @@ class GameTest {
         game.run();
 
         verify(unknown, description("It should execute the command"))
-                .apply(gameMap, user);
+                .apply(level);
     }
 
     @Test
@@ -66,7 +67,7 @@ class GameTest {
         game.run();
 
         verify(move, description("It should execute the command"))
-                .apply(gameMap, user);
+                .apply(level);
     }
 
     @Test
@@ -76,7 +77,7 @@ class GameTest {
         game.run();
 
         verify(move, description("It should execute the command"))
-                .apply(gameMap, user);
+                .apply(level);
     }
 
     @Test
@@ -86,7 +87,7 @@ class GameTest {
         game.run();
 
         verify(undefinedCommand, never())
-                .apply(gameMap, user);
+                .apply(level);
     }
 
     @Test
@@ -111,7 +112,8 @@ class GameTest {
 
     @BeforeEach
     public void setupGameLoader() {
-        when(gameLoader.load()).thenReturn(Pair.of(gameMap, user));
+        level = Map.of("user", user, "gameMap", gameMap);
+        when(gameLoader.load()).thenReturn(level);
     }
 
 
@@ -147,6 +149,8 @@ class GameTest {
 
     @InjectMocks
     private Game game;
+
+    private static Map<String, Object> level;
 
     private static final String WELCOME_MESSAGE = "Welcome to hunt the wumpus!";
     private static final String NOT_ALLOWED_MESSAGE = "Pf.Oak: It is not time to use this!";

@@ -5,11 +5,13 @@ import com.devemon.games.domain.elements.User;
 import com.devemon.games.logging.MessagePublisher;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 @Component
 public class Unknown implements GameCommand {
 
     @Override
-    public void apply(GameMap map, User user) {
+    public void apply(Map<String, Object> level) {
         messagePublisher.accept(UNKNOWN_PRONTO);
     }
 

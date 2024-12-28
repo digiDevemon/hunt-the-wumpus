@@ -2,32 +2,29 @@ package com.devemon.games;
 
 import com.devemon.games.domain.GameLoader;
 import com.devemon.games.domain.commands.*;
-import com.devemon.games.domain.elements.GameMap;
-import com.devemon.games.domain.elements.User;
 import com.devemon.games.keyboard.CommandListener;
 import com.devemon.games.logging.MessagePublisher;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class Game implements Runnable {
     @Override
     public void run() {
         messagePublisher.accept("Welcome to hunt the wumpus!");
-        var pairGame = gameLoader.load();
-        var user = pairGame.getRight();
-        var gameMap = pairGame.getLeft();
+        var level = gameLoader.load();
 
-        playLevel(gameMap, user);
+        playLevel(level);
     }
 
-    private void playLevel(GameMap gameMap, User user) {
+    private void playLevel(Map<String, Object> level) {
         while (true) {
             var command = commandListener.read();
 
             if (command.getClass() == Exit.class) {
-                command.apply(gameMap, user);
+                command.apply(level);
                 break;
             }
 
@@ -36,7 +33,7 @@ public class Game implements Runnable {
                 break;
             }
 
-            command.apply(gameMap, user);
+            command.apply(level);
         }
     }
 
