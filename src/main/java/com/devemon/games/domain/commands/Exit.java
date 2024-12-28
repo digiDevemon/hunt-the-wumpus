@@ -1,7 +1,7 @@
 package com.devemon.games.domain.commands;
 
-import com.devemon.games.domain.GameMap;
-import com.devemon.games.domain.User;
+import com.devemon.games.domain.elements.GameMap;
+import com.devemon.games.domain.elements.User;
 
 public class Exit implements GameCommand {
 
