@@ -130,7 +130,7 @@ class GameTest {
     private Move move;
 
     @Mock
-    private Shot shot;
+    private Shoot shot;
 
     @Mock
     private GameCommand undefinedCommand;

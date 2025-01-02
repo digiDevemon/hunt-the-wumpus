@@ -47,5 +47,5 @@ public class Game implements Runnable {
     private final CommandListener commandListener;
     private final GameLoader gameLoader;
 
-    private static final List<Class<? extends GameCommand>> ALLOWED_PLAY_COMMANDS = List.of(Unknown.class, Move.class, Shot.class);
+    private static final List<Class<? extends GameCommand>> ALLOWED_PLAY_COMMANDS = List.of(Unknown.class, Move.class, Shoot.class);
 }

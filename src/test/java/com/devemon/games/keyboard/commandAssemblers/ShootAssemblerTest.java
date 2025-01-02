@@ -1,6 +1,6 @@
 package com.devemon.games.keyboard.commandAssemblers;
 
-import com.devemon.games.domain.commands.Shot;
+import com.devemon.games.domain.commands.Shoot;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,7 +14,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
-class ShotAssemblerTest {
+class ShootAssemblerTest {
 
     @Test
     public void it_should_not_return_null_retrieving_input_example() {
@@ -35,12 +35,12 @@ class ShotAssemblerTest {
 
     @ParameterizedTest
     @MethodSource("acceptedCommands")
-    public void it_should_return_shot_command_from_accepted_commands(String inputCommand) {
+    public void it_should_return_shoot_command_from_accepted_commands(String inputCommand) {
         assertThat(shotAssembler.apply(inputCommand))
-                .as("It should return a shot command")
+                .as("It should return a shoot command")
                 .isPresent()
                 .get()
-                .isInstanceOf(Shot.class);
+                .isInstanceOf(Shoot.class);
     }
 
     @Test
@@ -59,7 +59,7 @@ class ShotAssemblerTest {
     }
 
     @InjectMocks
-    private ShotAssembler shotAssembler;
+    private ShootAssembler shotAssembler;
 
     private static final String INPUT_EXAMPLE = "S<Number>";
     private static final String ACCEPTED_COMMAND = "S7";

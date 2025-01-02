@@ -33,10 +33,10 @@ public class CommandFactory implements Function<String, GameCommand> {
         this.messagePublisher.accept("Possible command inputs: ".concat(commands));
     }
 
-    public CommandFactory(MoveAssembler moveFactory, ShotAssembler shotFactory, ExitAssembler exitFactory, UnknownAssembler unknownAssembler, MessagePublisher messagePublisher) {
+    public CommandFactory(MoveAssembler moveFactory, ShootAssembler shootFactory, ExitAssembler exitFactory, UnknownAssembler unknownAssembler, MessagePublisher messagePublisher) {
         commandFactories = List.of(
                 moveFactory,
-                shotFactory,
+                shootFactory,
                 exitFactory,
                 unknownAssembler
         );

@@ -3,7 +3,7 @@ package com.devemon.games.keyboard;
 import com.devemon.games.domain.commands.*;
 import com.devemon.games.keyboard.commandAssemblers.ExitAssembler;
 import com.devemon.games.keyboard.commandAssemblers.MoveAssembler;
-import com.devemon.games.keyboard.commandAssemblers.ShotAssembler;
+import com.devemon.games.keyboard.commandAssemblers.ShootAssembler;
 import com.devemon.games.keyboard.commandAssemblers.UnknownAssembler;
 import com.devemon.games.logging.MessagePublisher;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,7 +42,7 @@ class CommandFactoryTest {
     public void it_should_return_a_shot_action() {
         assertThat(commandAssembler.apply(SHOT_INPUT_ACTION))
                 .as("It should return shot action")
-                .isInstanceOf(Shot.class);
+                .isInstanceOf(Shoot.class);
     }
 
     @Test
@@ -95,9 +95,9 @@ class CommandFactoryTest {
     private MoveAssembler moveFactory;
 
     @Mock
-    private Shot shotAction;
+    private Shoot shotAction;
     @Mock
-    private ShotAssembler shotAssembler;
+    private ShootAssembler shotAssembler;
 
     @Mock
     private Exit exitAction;

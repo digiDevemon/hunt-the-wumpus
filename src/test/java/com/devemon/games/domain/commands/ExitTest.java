@@ -9,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Map;
 
+import static org.mockito.Mockito.description;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -18,7 +19,7 @@ class ExitTest {
     @Test
     public void it_should_notify_exit_game() {
         exit.apply(LEVEL);
-        verify(messagePublisher).accept(EXIT_MESSAGE);
+        verify(messagePublisher, description("It should publish exit message")).accept(EXIT_MESSAGE);
     }
 
     @Mock

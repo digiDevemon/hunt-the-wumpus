@@ -35,9 +35,9 @@ class ExitAssemblerTest {
 
     @ParameterizedTest
     @MethodSource("acceptedCommands")
-    public void it_should_return_move_command_from_accepted_commands(String inputCommand) {
+    public void it_should_return_exit_command_from_accepted_commands(String inputCommand) {
         assertThat(exitAssembler.apply(inputCommand))
-                .as("It should return a move command ")
+                .as("It should return a exit command ")
                 .isPresent()
                 .get()
                 .isInstanceOf(Exit.class);

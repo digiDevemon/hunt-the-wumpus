@@ -9,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Map;
 
+import static org.mockito.Mockito.description;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -17,7 +18,7 @@ class UnknownTest {
     @Test
     public void it_should_notify_that_is_executing_an_unknown_command() {
         unknown.apply(LEVEL);
-        verify(messagePublisher).accept(UNKNOWN_PRONTO);
+        verify(messagePublisher, description("It should notify about not found command")).accept(UNKNOWN_PRONTO);
     }
 
     @Mock
