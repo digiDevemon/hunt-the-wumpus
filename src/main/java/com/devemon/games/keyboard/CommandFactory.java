@@ -2,11 +2,13 @@ package com.devemon.games.keyboard;
 
 import com.devemon.games.domain.commands.GameCommand;
 import com.devemon.games.keyboard.commandAssemblers.*;
+import com.devemon.games.logging.MessagePublisher;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Component
 public class CommandFactory implements Function<String, GameCommand> {
@@ -21,14 +23,26 @@ public class CommandFactory implements Function<String, GameCommand> {
                 .get();
     }
 
-    public CommandFactory(MoveAssembler moveFactory, ShotAssembler shotFactory, ExitAssembler exitFactory, UnknownAssembler unknownAssembler) {
+    public void showAvailableCommands() {
+        var commands = commandFactories.stream()
+                .map(CommandAssembler::getAvailableInputExample)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.joining(" / "));
+
+        this.messagePublisher.accept("Possible command inputs: ".concat(commands));
+    }
+
+    public CommandFactory(MoveAssembler moveFactory, ShotAssembler shotFactory, ExitAssembler exitFactory, UnknownAssembler unknownAssembler, MessagePublisher messagePublisher) {
         commandFactories = List.of(
                 moveFactory,
                 shotFactory,
                 exitFactory,
                 unknownAssembler
         );
+        this.messagePublisher = messagePublisher;
     }
 
     private final List<CommandAssembler> commandFactories;
+    private final MessagePublisher messagePublisher;
 }

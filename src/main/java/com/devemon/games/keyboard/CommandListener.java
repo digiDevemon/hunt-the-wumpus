@@ -10,6 +10,7 @@ import java.util.Scanner;
 public class CommandListener {
 
     public GameCommand read() {
+        commandFactory.showAvailableCommands();
         var line = keyboardListener.nextLine();
         return commandFactory.apply(line);
     }

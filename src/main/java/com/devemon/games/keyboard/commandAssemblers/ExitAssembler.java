@@ -11,4 +11,10 @@ public class ExitAssembler implements CommandAssembler {
     public Optional<GameCommand> apply(String keyboardInput) {
         return Optional.empty();
     }
+
+    @Override
+    public Optional<String> getAvailableInputExample() {
+        return Optional.empty();
+    }
+
 }

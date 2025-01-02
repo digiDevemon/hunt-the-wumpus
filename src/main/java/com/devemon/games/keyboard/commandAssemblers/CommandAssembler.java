@@ -9,4 +9,6 @@ public interface CommandAssembler extends Function<String, Optional<GameCommand>
 
     @Override
     Optional<GameCommand> apply(String keyboardInput);
+
+    Optional<String> getAvailableInputExample();
 }

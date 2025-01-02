@@ -5,6 +5,7 @@ import com.devemon.games.keyboard.commandAssemblers.ExitAssembler;
 import com.devemon.games.keyboard.commandAssemblers.MoveAssembler;
 import com.devemon.games.keyboard.commandAssemblers.ShotAssembler;
 import com.devemon.games.keyboard.commandAssemblers.UnknownAssembler;
+import com.devemon.games.logging.MessagePublisher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,6 +18,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class CommandFactoryTest {
@@ -57,24 +59,34 @@ class CommandFactoryTest {
                 .isInstanceOf(Unknown.class);
     }
 
+    @Test
+    public void it_should_publish_potential_input_commands() {
+        commandAssembler.showAvailableCommands();
+        verify(messagePublisher).accept(MESSAGE_POSSIBLE_COMMANDS);
+    }
+
     @BeforeEach
     public void setupMoveFactory() {
         lenient().when(moveFactory.apply(MOVE_INPUT_ACTION)).thenReturn(Optional.of(moveAction));
+        lenient().when(moveFactory.getAvailableInputExample()).thenReturn(EXAMPLE_MOVE_INPUT_ACTION);
     }
 
     @BeforeEach
     public void setupShotFactory() {
         lenient().when(shotAssembler.apply(SHOT_INPUT_ACTION)).thenReturn(Optional.of(shotAction));
+        lenient().when(shotAssembler.getAvailableInputExample()).thenReturn(EXAMPLE_SHOT_INPUT_ACTION);
     }
 
     @BeforeEach
     public void setupExitFactory() {
         lenient().when(exitAssembler.apply(EXIT_INPUT_ACTION)).thenReturn(Optional.of(exitAction));
+        lenient().when(exitAssembler.getAvailableInputExample()).thenReturn(EXAMPLE_EXIT_INPUT_ACTION);
     }
 
     @BeforeEach
     public void setupUnknownFactory() {
         lenient().when(unknownAssembler.apply(any())).thenReturn(Optional.of(unknown));
+        lenient().when(unknownAssembler.getAvailableInputExample()).thenReturn(EXAMPLE_UNKNOWN_ACTION);
     }
 
     @Mock
@@ -97,6 +109,9 @@ class CommandFactoryTest {
     @Mock
     private UnknownAssembler unknownAssembler;
 
+    @Mock
+    private MessagePublisher messagePublisher;
+
     @InjectMocks
     private CommandFactory commandAssembler;
 
@@ -104,4 +119,14 @@ class CommandFactoryTest {
     private static final String SHOT_INPUT_ACTION = "shot keyboard action";
     private static final String EXIT_INPUT_ACTION = "exit action";
     private static final String UNKNOWN_ACTION = "unknown action";
+
+    private static final Optional<String> EXAMPLE_MOVE_INPUT_ACTION = Optional.of("M");
+    private static final Optional<String> EXAMPLE_SHOT_INPUT_ACTION = Optional.of("S");
+    private static final Optional<String> EXAMPLE_EXIT_INPUT_ACTION = Optional.of("Exit");
+    private static final Optional<String> EXAMPLE_UNKNOWN_ACTION = Optional.empty();
+    private static final String MESSAGE_POSSIBLE_COMMANDS = String.format("Possible command inputs: %s / %s / %s",
+            EXAMPLE_MOVE_INPUT_ACTION.get(),
+            EXAMPLE_SHOT_INPUT_ACTION.get(),
+            EXAMPLE_EXIT_INPUT_ACTION.get());
+
 }

@@ -25,6 +25,13 @@ class CommandListenerTest {
     }
 
     @Test
+    public void it_should_show_accepted_commands() {
+        setupCommandListener();
+        commandListener.read();
+        verify(commandFactory, description("It should show accepted commands")).showAvailableCommands();
+    }
+
+    @Test
     public void it_should_read_a_command_from_input() {
         setupCommandListener();
         commandListener.read();

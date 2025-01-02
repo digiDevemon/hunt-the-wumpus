@@ -17,6 +17,12 @@ public class UnknownAssembler implements CommandAssembler {
         ));
     }
 
+    @Override
+    public Optional<String> getAvailableInputExample() {
+        return Optional.empty();
+    }
+
+
     public UnknownAssembler(MessagePublisher messagePublisher) {
         this.messagePublisher = messagePublisher;
     }
