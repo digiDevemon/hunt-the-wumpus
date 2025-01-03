@@ -1,5 +1,6 @@
 package com.devemon.games;
 
+import com.devemon.games.domain.ClueLogging;
 import com.devemon.games.domain.GameLoader;
 import com.devemon.games.domain.commands.*;
 import com.devemon.games.domain.elements.GameMap;
@@ -41,18 +42,28 @@ class GameTest {
     }
 
     @Test
-    public void it_should_retrieve_game_action_from_command_listener_in_dummy_play() {
+    public void it_should_show_level_clues() {
         setupCommandListenerDummyPlay();
 
         game.run();
 
-        verify(commandListener, atLeast(2))
+        verify(clueLogging, description("It should show level clues"))
+                .accept(level);
+    }
+
+    @Test
+    public void it_should_retrieve_game_action_from_command_listener_in_dummy_play() {
+        setupCommandListenerUsualPlay();
+
+        game.run();
+
+        verify(commandListener, atLeast(4))
                 .read();
     }
 
     @Test
     public void it_should_execute_the_unknown_command_in_dummy_play() {
-        setupCommandListenerDummyPlay();
+        setupCommandListenerUsualPlay();
 
         game.run();
 
@@ -62,7 +73,7 @@ class GameTest {
 
     @Test
     public void it_should_execute_the_move_command_in_fail_play() {
-        setupCommandListenerFailPlay();
+        setupCommandListenerUsualPlay();
 
         game.run();
 
@@ -72,7 +83,7 @@ class GameTest {
 
     @Test
     public void it_should_execute_the_shot_command_in_fail_play() {
-        setupCommandListenerFailPlay();
+        setupCommandListenerUsualPlay();
 
         game.run();
 
@@ -82,7 +93,7 @@ class GameTest {
 
     @Test
     public void it_should_not_execute_the_undefined_command_in_fail_play() {
-        setupCommandListenerFailPlay();
+        setupCommandListenerUsualPlay();
 
         game.run();
 
@@ -92,7 +103,7 @@ class GameTest {
 
     @Test
     public void it_should_notify_you_for_not_allowed_commands_in_fail_play() {
-        setupCommandListenerFailPlay();
+        setupCommandListenerUsualPlay();
 
         game.run();
 
@@ -102,12 +113,13 @@ class GameTest {
 
     public void setupCommandListenerDummyPlay() {
         when(commandListener.read())
-                .thenReturn(unknown).thenReturn(exit);
+                .thenReturn(exit);
     }
 
-    public void setupCommandListenerFailPlay() {
+
+    public void setupCommandListenerUsualPlay() {
         when(commandListener.read())
-                .thenReturn(move).thenReturn(shot).thenReturn(undefinedCommand).thenReturn(exit);
+                .thenReturn(move).thenReturn(shot).thenReturn(unknown).thenReturn(undefinedCommand).thenReturn(exit);
     }
 
     @BeforeEach
@@ -146,6 +158,9 @@ class GameTest {
 
     @Mock
     private User user;
+
+    @Mock
+    private ClueLogging clueLogging;
 
     @InjectMocks
     private Game game;
