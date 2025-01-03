@@ -1,5 +1,5 @@
 package com.devemon.games.domain.elements;
 
 public enum SquareState {
-    BATS, WUMPUS, HOLE
+    BATS, WUMPUS, HOLE, NONE
 }
