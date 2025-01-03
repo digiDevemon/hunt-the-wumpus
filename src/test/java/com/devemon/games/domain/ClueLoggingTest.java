@@ -1,7 +1,7 @@
 package com.devemon.games.domain;
 
 import com.devemon.games.domain.elements.GameMap;
-import com.devemon.games.domain.elements.GameSquare;
+import com.devemon.games.domain.elements.Square;
 import com.devemon.games.domain.elements.User;
 import com.devemon.games.logging.MessagePublisher;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Map;
 
-import static com.devemon.games.domain.elements.SquareStates.*;
+import static com.devemon.games.domain.elements.SquareState.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -119,13 +119,13 @@ class ClueLoggingTest {
     private User user;
 
     @Mock
-    private GameSquare gameSquareBats;
+    private Square gameSquareBats;
 
     @Mock
-    private GameSquare gameSquareHole;
+    private Square gameSquareHole;
 
     @Mock
-    private GameSquare gameSquareWumpus;
+    private Square gameSquareWumpus;
 
     @Mock
     private MessagePublisher messagePublisher;

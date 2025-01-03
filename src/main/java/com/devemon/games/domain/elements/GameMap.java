@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class GameMap {
-    public Collection<GameSquare> getConnectedSquares(Integer userPositionId) {
-        return List.of(new GameSquare());
+    public Collection<Square> getConnectedSquares(Integer userPositionId) {
+        return List.of(new Square());
     }
 }
