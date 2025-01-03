@@ -1,6 +1,6 @@
 package com.devemon.games;
 
-import com.devemon.games.domain.ClueLogging;
+import com.devemon.games.logging.ClueLogging;
 import com.devemon.games.domain.GameLoader;
 import com.devemon.games.domain.commands.*;
 import com.devemon.games.keyboard.CommandListener;

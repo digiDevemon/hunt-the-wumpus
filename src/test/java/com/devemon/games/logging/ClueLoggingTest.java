@@ -1,9 +1,8 @@
-package com.devemon.games.domain;
+package com.devemon.games.logging;
 
 import com.devemon.games.domain.elements.GameMap;
 import com.devemon.games.domain.elements.Square;
 import com.devemon.games.domain.elements.User;
-import com.devemon.games.logging.MessagePublisher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

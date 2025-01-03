@@ -13,7 +13,7 @@ public class GameMap {
     private Collection<Square> squares;
 
     public Collection<Square> getConnectedSquares(Integer userPositionId) {
-        return List.of(new SquareBuilder(1).build());
+        return List.of(new SquareBuilder(1).withState(SquareState.HOLE).build());
     }
 
     public static class GameMapBuilder {

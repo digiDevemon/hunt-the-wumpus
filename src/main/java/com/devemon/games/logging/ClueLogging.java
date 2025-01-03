@@ -1,10 +1,9 @@
-package com.devemon.games.domain;
+package com.devemon.games.logging;
 
 import com.devemon.games.domain.elements.GameMap;
 import com.devemon.games.domain.elements.Square;
 import com.devemon.games.domain.elements.SquareState;
 import com.devemon.games.domain.elements.User;
-import com.devemon.games.logging.MessagePublisher;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
