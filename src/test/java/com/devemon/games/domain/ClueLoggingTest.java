@@ -37,6 +37,30 @@ class ClueLoggingTest {
         verify(completeMap).getConnectedSquares(USER_POSITION_ID);
     }
 
+    @Test
+    public void it_should_show_the_expected_logging_for_complete_level() {
+        setupLevels();
+        clueLogging.accept(completeLevel);
+
+        verify(messagePublisher).accept(EXPECTED_COMPLETE_LEVEL_MESSAGE);
+    }
+
+
+    @Test
+    public void it_should_show_the_expected_logging_for_bats_level() {
+        setupLevels();
+        clueLogging.accept(batsLevel);
+
+        verify(messagePublisher).accept(EXPECTED_BATS_LEVEL_MESSAGE);
+    }
+
+    @Test
+    public void it_should_show_the_expected_logging_for_hole_and_wumpus_level() {
+        setupLevels();
+        clueLogging.accept(holeAndWumpusLevel);
+
+        verify(messagePublisher).accept(EXPECTED_HOLE_AND_WUMPUS_LEVEL_MESSAGE);
+    }
 
     private void setupLevels() {
         completeLevel = Map.of("user", user, "gameMap", completeMap);
@@ -77,10 +101,10 @@ class ClueLoggingTest {
     private Map<String, Object> batsLevel;
     private Map<String, Object> holeAndWumpusLevel;
 
-    private static final String EXPECTED_COMPLETE_LEVEL_MESSAGE = "You feel the next:\n-You hear nearby flapping.\n-A foul smell comes from somewhere.\n-A gust of cold air comes from somewhere.";
+    private static final String EXPECTED_COMPLETE_LEVEL_MESSAGE = "You have the next feelings:\n-You hear nearby flapping.\n-A foul smell comes from somewhere.\n-A gust of cold air comes from somewhere.";
 
-    private static final String EXPECTED_BATS_LEVEL_MESSAGE = "You feel the next:\n-You hear nearby flapping.";
-    private static final String EXPECTED_HOLE_AND_WUMPUS_LEVEL_MESSAGE = "You feel the next:\n-A gust of cold air comes from somewhere.\n-A foul smell comes from somewhere.";
+    private static final String EXPECTED_BATS_LEVEL_MESSAGE = "You have the next feelings:\n-You hear nearby flapping.";
+    private static final String EXPECTED_HOLE_AND_WUMPUS_LEVEL_MESSAGE = "You have the next feelings:\n-A foul smell comes from somewhere.\n-A gust of cold air comes from somewhere.";
 
     @Mock
     private GameMap completeMap;
