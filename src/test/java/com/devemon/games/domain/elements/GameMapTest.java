@@ -2,6 +2,7 @@ package com.devemon.games.domain.elements;
 
 import com.devemon.games.domain.elements.GameMap.GameMapBuilder;
 import com.devemon.games.domain.elements.exceptions.NotValidMap;
+import com.devemon.games.domain.elements.exceptions.SquareDuplication;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -38,10 +39,20 @@ class GameMapTest {
 
     }
 
+    @Test
+    public void it_should_throw_an_exception_when_the_map_has_duplicated_ids() {
+        var gameMapBuilder = new GameMapBuilder().withSquare(HOLE_SQUARE).withSquare(WUMPUS_SQUARE).withSquare(DUPLICATED_SQUARE);
+
+        assertThrows(SquareDuplication.class,
+                gameMapBuilder::build, "It should throw a not valid map exception");
+
+    }
+
 
     private static final Integer HOLE_SQUARE_ID = 1;
     private static final Integer WUMPUS_SQUARE_ID = 2;
     private static final Square HOLE_SQUARE = new Square.SquareBuilder(HOLE_SQUARE_ID).connectedTo(List.of(WUMPUS_SQUARE_ID)).withState(HOLE).build();
     private static final Square WUMPUS_SQUARE = new Square.SquareBuilder(WUMPUS_SQUARE_ID).connectedTo(List.of(HOLE_SQUARE_ID)).withState(WUMPUS).build();
     private static final Square NOT_CONNECTED_SQUARE = new Square.SquareBuilder(77).withState(NONE).build();
+    private static final Square DUPLICATED_SQUARE =  new Square.SquareBuilder(HOLE_SQUARE_ID).connectedTo(List.of(WUMPUS_SQUARE_ID)).withState(BATS).build();
 }

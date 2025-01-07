@@ -1,6 +1,7 @@
 package com.devemon.games.domain.elements;
 
 import com.devemon.games.domain.elements.exceptions.NotValidMap;
+import com.devemon.games.domain.elements.exceptions.SquareDuplication;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,9 +33,19 @@ public class GameMap {
 
 
         public GameMap build() throws NotValidMap {
-            //TODO: Implement check not duplicated ids
+            checkDuplicatedIDs();
             checkMapConnections();
             return new GameMap(this);
+        }
+
+        public void checkDuplicatedIDs() {
+            var alreadyCheckedIds = new ArrayList<>();
+            squares.forEach(square -> {
+                if (alreadyCheckedIds.contains(square.getId())) {
+                    throw new SquareDuplication(square.getId());
+                }
+                alreadyCheckedIds.add(square.getId());
+            });
         }
 
         public void checkMapConnections() {
