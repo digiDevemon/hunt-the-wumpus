@@ -23,7 +23,7 @@ class ClueLoggingTest {
     @Test
     public void it_should_retrieve_user_position() {
         setupLevels();
-        clueLogging.accept(completeLevel);
+        clueLogging.logFeelingsClue(completeLevel);
 
         verify(user).getPositionID();
     }
@@ -31,7 +31,7 @@ class ClueLoggingTest {
     @Test
     public void it_should_retrieve_near_squares_from_map() {
         setupLevels();
-        clueLogging.accept(completeLevel);
+        clueLogging.logFeelingsClue(completeLevel);
 
         verify(completeMap).getConnectedSquares(USER_POSITION_ID);
     }
@@ -39,7 +39,7 @@ class ClueLoggingTest {
     @Test
     public void it_should_show_the_expected_logging_for_complete_level() {
         setupLevels();
-        clueLogging.accept(completeLevel);
+        clueLogging.logFeelingsClue(completeLevel);
 
         verify(messagePublisher).accept(EXPECTED_COMPLETE_LEVEL_MESSAGE);
     }
@@ -48,7 +48,7 @@ class ClueLoggingTest {
     @Test
     public void it_should_show_the_expected_logging_for_bats_level() {
         setupLevels();
-        clueLogging.accept(batsLevel);
+        clueLogging.logFeelingsClue(batsLevel);
 
         verify(messagePublisher).accept(EXPECTED_BATS_LEVEL_MESSAGE);
     }
@@ -56,9 +56,17 @@ class ClueLoggingTest {
     @Test
     public void it_should_show_the_expected_logging_for_hole_and_wumpus_level() {
         setupLevels();
-        clueLogging.accept(holeAndWumpusLevel);
+        clueLogging.logFeelingsClue(holeAndWumpusLevel);
 
         verify(messagePublisher).accept(EXPECTED_HOLE_AND_WUMPUS_LEVEL_MESSAGE);
+    }
+
+    @Test
+    public void it_should_show_the_expected_logging_target_squares() {
+        setupLevels();
+        clueLogging.logNearRooms(completeLevel);
+
+        verify(messagePublisher).accept(EXPECTED_TARGET_SQUARES_MESSAGE);
     }
 
     private void setupLevels() {
@@ -82,28 +90,37 @@ class ClueLoggingTest {
     @BeforeEach
     public void setupGameSquareHole() {
         lenient().when(gameSquareHole.getThreat()).thenReturn(HOLE);
+        lenient().when(gameSquareHole.getId()).thenReturn(HOLE_SQUARE_POSITION);
     }
 
     @BeforeEach
     public void setupGameSquareBats() {
         lenient().when(gameSquareBats.getThreat()).thenReturn(BATS);
+        lenient().when(gameSquareBats.getId()).thenReturn(BATS_SQUARE_POSITION);
     }
 
     @BeforeEach
     public void setupGameSquareWumpus() {
         lenient().when(gameSquareWumpus.getThreat()).thenReturn(WUMPUS);
+        lenient().when(gameSquareWumpus.getId()).thenReturn(WUMPUS_SQUARE_POSITION);
+
     }
 
     private static final Integer USER_POSITION_ID = 1;
+
+    private static final Integer BATS_SQUARE_POSITION = 2;
+    private static final Integer WUMPUS_SQUARE_POSITION = 3;
+    private static final Integer HOLE_SQUARE_POSITION = 4;
 
     private Map<String, Object> completeLevel;
     private Map<String, Object> batsLevel;
     private Map<String, Object> holeAndWumpusLevel;
 
     private static final String EXPECTED_COMPLETE_LEVEL_MESSAGE = "You have the next feelings:\n-You hear nearby flapping.\n-A foul smell comes from somewhere.\n-A gust of cold air comes from somewhere.";
-
     private static final String EXPECTED_BATS_LEVEL_MESSAGE = "You have the next feelings:\n-You hear nearby flapping.";
     private static final String EXPECTED_HOLE_AND_WUMPUS_LEVEL_MESSAGE = "You have the next feelings:\n-A foul smell comes from somewhere.\n-A gust of cold air comes from somewhere.";
+    private static final String EXPECTED_TARGET_SQUARES_MESSAGE = "Current room: 1 Near rooms: 2,3,4";
+
 
     @Mock
     private GameMap completeMap;

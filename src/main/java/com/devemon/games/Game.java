@@ -22,7 +22,8 @@ public class Game implements Runnable {
 
     private void playLevel(Map<String, Object> level) {
         while (true) {
-            clueLogging.accept(level);
+            clueLogging.logFeelingsClue(level);
+            clueLogging.logNearRooms(level);
 
             var command = commandListener.read();
 

@@ -48,7 +48,17 @@ class GameTest {
         game.run();
 
         verify(clueLogging, description("It should show level clues"))
-                .accept(level);
+                .logFeelingsClue(level);
+    }
+
+    @Test
+    public void it_should_show_near_rooms() {
+        setupCommandListenerDummyPlay();
+
+        game.run();
+
+        verify(clueLogging, description("It should show level clues"))
+                .logNearRooms(level);
     }
 
     @Test

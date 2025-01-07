@@ -6,24 +6,42 @@ import com.devemon.games.domain.elements.SquareState;
 import com.devemon.games.domain.elements.User;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.Map;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static com.devemon.games.domain.elements.SquareState.*;
 
 @Component
-public class ClueLogging implements Consumer<Map<String, Object>> {
-    @Override
-    public void accept(Map<String, Object> level) {
-        var user = (User) level.get("user");
-        var map = (GameMap) level.get("gameMap");
-        var clueSquares = map.getConnectedSquares(user.getPositionID()).stream()
+public class ClueLogging {
+
+    public void logFeelingsClue(Map<String, Object> level) {
+        var connectedSquares = getNearSquares(level);
+
+        var clueSquares = connectedSquares.stream()
                 .map(Square::getThreat)
                 .map(CLUE_MAPPING::get)
                 .collect(Collectors.toList());
-        clueSquares.add(0, INTRODUCTION_MESSAGE);
+        clueSquares.add(0, INTRODUCTION_CLUE_MESSAGE);
         messagePublisher.accept(String.join("\n", clueSquares));
+    }
+
+    public void logNearRooms(Map<String, Object> level) {
+        var connectedSquares = getNearSquares(level);
+
+        var clueSquares = connectedSquares.stream()
+                .map(Square::getId)
+                .map(String::valueOf)
+                .collect(Collectors.toList());
+        var nearRoomsMessage = String.join(",", clueSquares);
+        var localRoomMessage = "Current room: ".concat(String.valueOf(((User) level.get("user")).getPositionID()));
+        messagePublisher.accept(String.join(" ", localRoomMessage, INTRODUCTION_ROOMS_MESSAGE, nearRoomsMessage));
+    }
+
+    private Collection<Square> getNearSquares(Map<String, Object> level) {
+        var user = (User) level.get("user");
+        var map = (GameMap) level.get("gameMap");
+        return map.getConnectedSquares(user.getPositionID());
     }
 
     public ClueLogging(MessagePublisher messagePublisher) {
@@ -32,7 +50,9 @@ public class ClueLogging implements Consumer<Map<String, Object>> {
 
     private MessagePublisher messagePublisher;
 
-    private static final String INTRODUCTION_MESSAGE = "You have the next feelings:";
+    private static final String INTRODUCTION_CLUE_MESSAGE = "You have the next feelings:";
+    private static final String INTRODUCTION_ROOMS_MESSAGE = "Near rooms:";
+
     private static final Map<SquareState, String> CLUE_MAPPING = Map.of(
             BATS, "-You hear nearby flapping.",
             HOLE, "-A gust of cold air comes from somewhere.",

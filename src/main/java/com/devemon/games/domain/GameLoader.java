@@ -20,12 +20,10 @@ public class GameLoader {
                         new SquareBuilder(1).connectedTo(List.of(2, 3)).withState(SquareState.BATS).build()
                 )
                 .withSquare(
-                        new SquareBuilder(2).connectedTo(List.of(1)).withState(SquareState.HOLE
-                        ).build()
+                        new SquareBuilder(2).connectedTo(List.of(1)).withState(SquareState.HOLE).build()
                 )
                 .withSquare(
-                        new SquareBuilder(3).connectedTo(List.of(1)).withState(SquareState.WUMPUS
-                        ).build()
+                        new SquareBuilder(3).connectedTo(List.of(1)).withState(SquareState.WUMPUS).build()
                 )
                 .build());
     }
