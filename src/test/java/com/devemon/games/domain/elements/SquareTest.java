@@ -25,7 +25,7 @@ class SquareTest {
     }
 
     @Test
-    public void it_should_return_the_expected_connection_list(){
+    public void it_should_return_the_expected_connection_list() {
         var square = setupSquare(CONNECTIONS_IDS);
 
         assertThat(square.getConnections())
@@ -35,7 +35,7 @@ class SquareTest {
     }
 
     @Test
-    public void it_should_return_the_expected_connection_list_given_malformed_connection(){
+    public void it_should_return_the_expected_connection_list_given_malformed_connection() {
         var square = setupSquare(CONNECTIONS_IDS_MALFORMED);
 
         assertThat(square.getConnections())
@@ -45,7 +45,7 @@ class SquareTest {
     }
 
     @Test
-    public void it_should_return_the_expected_state(){
+    public void it_should_return_the_expected_state() {
         var square = new SquareBuilder(ID).withState(EXPECTED_STATE).build();
 
         assertThat(square.getThreat())
@@ -54,16 +54,13 @@ class SquareTest {
 
     }
 
-    public Square setupSquare(List<Integer> connectionList){
-        var squareBuilder = new SquareBuilder(ID);
-        connectionList.forEach(
-                squareBuilder::connectedTo
-        );
+    public Square setupSquare(List<Integer> connectionList) {
+        var squareBuilder = new SquareBuilder(ID).connectedTo(connectionList);
         return squareBuilder.build();
     }
 
-    private static final List<Integer> CONNECTIONS_IDS_MALFORMED = List.of(2,2,5,5,8);
-    private static final List<Integer> CONNECTIONS_IDS = List.of(2,5,8);
+    private static final List<Integer> CONNECTIONS_IDS_MALFORMED = List.of(2, 2, 5, 5, 8);
+    private static final List<Integer> CONNECTIONS_IDS = List.of(2, 5, 8);
     private static final SquareState EXPECTED_STATE = WUMPUS;
     private static final Integer ID = 1;
 }

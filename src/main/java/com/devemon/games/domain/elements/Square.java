@@ -38,11 +38,13 @@ public class Square {
             return new Square(this);
         }
 
-        public SquareBuilder connectedTo(Integer squareId) {
-            if (connections.contains(squareId)) {
+        public SquareBuilder connectedTo(List<Integer> squareIdList) {
+            if (connections.contains(squareIdList)) {
                 return this;
             }
-            connections.add(squareId);
+            squareIdList.stream()
+                    .filter(connectionID -> !connections.contains(connectionID))
+                    .forEach(connections::add);
             return this;
         }
 
