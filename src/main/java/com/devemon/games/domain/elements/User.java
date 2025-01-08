@@ -2,6 +2,13 @@ package com.devemon.games.domain.elements;
 
 public class User {
     public Integer getPositionID() {
-        return 1;
+        return squareID;
     }
+
+    public User(Integer squareID) {
+
+        this.squareID = squareID;
+    }
+
+    private final Integer squareID;
 }

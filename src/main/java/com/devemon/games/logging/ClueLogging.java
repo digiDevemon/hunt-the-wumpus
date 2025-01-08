@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.devemon.games.domain.elements.SquareState.*;
@@ -20,10 +21,18 @@ public class ClueLogging {
 
         var clueSquares = connectedSquares.stream()
                 .map(Square::getThreat)
-                .map(CLUE_MAPPING::get)
+                .map(this::findClue)
+                .flatMap(Optional::stream)
                 .collect(Collectors.toList());
         clueSquares.add(0, INTRODUCTION_CLUE_MESSAGE);
         messagePublisher.accept(String.join("\n", clueSquares));
+    }
+
+    private Optional<String> findClue(SquareState squareState) {
+        if (CLUE_MAPPING.containsKey(squareState)) {
+            return Optional.of(CLUE_MAPPING.get(squareState));
+        }
+        return Optional.empty();
     }
 
     public void logNearRooms(Map<String, Object> level) {

@@ -28,6 +28,9 @@ public class GameMap {
                 .orElseThrow();
     }
 
+    public Collection<Square> getSquares() {
+        return this.squares;
+    }
 
     public static class GameMapBuilder {
 
@@ -50,7 +53,6 @@ public class GameMap {
 
         public void checkMapConnections() {
             var connections = squares.stream().map(Square::getConnections).flatMap(List::stream).toList();
-
             squares.stream().map(Square::getId)
                     .forEach(squareId -> {
                         if (!connections.contains(squareId)) {

@@ -44,7 +44,7 @@ class GameMapTest {
         var gameMapBuilder = new GameMapBuilder().withSquare(HOLE_SQUARE).withSquare(WUMPUS_SQUARE).withSquare(DUPLICATED_SQUARE);
 
         assertThrows(SquareDuplication.class,
-                gameMapBuilder::build, "It should throw a not valid map exception");
+                gameMapBuilder::build, "It should throw a not square duplication exception");
 
     }
 
