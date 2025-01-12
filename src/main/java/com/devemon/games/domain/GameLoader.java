@@ -30,7 +30,8 @@ public class GameLoader {
         MAP_STRUCTURE.keySet().forEach(key -> mapBuilder.withSquare(
                         new SquareBuilder(key)
                                 .connectedTo(MAP_STRUCTURE.get(key))
-                                .withState(getStateFromIDList(key, holeSquares, batsSquares, wumpusSquares)).build()
+                                .withState(getStateFromIdList(key, holeSquares, batsSquares, wumpusSquares))
+                                .build()
                 )
         );
 
@@ -45,16 +46,16 @@ public class GameLoader {
         return new User(randomPosition);
     }
 
-    private SquareState getStateFromIDList(Integer id, Collection<Integer> holeIDs, Collection<Integer> batIDs, Collection<Integer> wumpusIDs) {
-        if (holeIDs.contains(id)) {
+    private SquareState getStateFromIdList(Integer id, Collection<Integer> holeIds, Collection<Integer> batIds, Collection<Integer> wumpusIds) {
+        if (holeIds.contains(id)) {
             return HOLE;
         }
 
-        if (batIDs.contains(id)) {
+        if (batIds.contains(id)) {
             return BATS;
         }
 
-        if (wumpusIDs.contains(id)) {
+        if (wumpusIds.contains(id)) {
             return WUMPUS;
         }
 
@@ -62,18 +63,18 @@ public class GameLoader {
     }
 
     private List<Integer> getFreeSquaresId(Integer size, Collection<Integer> firstList, Collection<Integer> secondList) {
-        var squareIDs = new ArrayList<Integer>(List.of());
+        var squareIds = new ArrayList<Integer>(List.of());
         var random = new Random();
         var availableSquares = MAP_STRUCTURE.keySet().stream().toList();
 
-        while (squareIDs.size() < size) {
+        while (squareIds.size() < size) {
             var randomElement = availableSquares.get(random.nextInt(availableSquares.size()));
-            if (firstList.contains(randomElement) || secondList.contains(randomElement) || squareIDs.contains(randomElement)) {
+            if (firstList.contains(randomElement) || secondList.contains(randomElement) || squareIds.contains(randomElement)) {
                 continue;
             }
-            squareIDs.add(randomElement);
+            squareIds.add(randomElement);
         }
-        return squareIDs;
+        return squareIds;
     }
 
     private static final Map<Integer, List<Integer>> MAP_STRUCTURE = Map.ofEntries(

@@ -43,14 +43,14 @@ public class ClueLogging {
                 .map(String::valueOf)
                 .collect(Collectors.toList());
         var nearRoomsMessage = String.join(",", clueSquares);
-        var localRoomMessage = "Current room: ".concat(String.valueOf(((User) level.get("user")).getPositionID()));
+        var localRoomMessage = "Current room: ".concat(String.valueOf(((User) level.get("user")).getPositionId()));
         messagePublisher.accept(String.join(" ", localRoomMessage, INTRODUCTION_ROOMS_MESSAGE, nearRoomsMessage));
     }
 
     private Collection<Square> getNearSquares(Map<String, Object> level) {
         var user = (User) level.get("user");
         var map = (GameMap) level.get("gameMap");
-        return map.getConnectedSquares(user.getPositionID());
+        return map.getConnectedSquares(user.getPositionId());
     }
 
     public ClueLogging(MessagePublisher messagePublisher) {

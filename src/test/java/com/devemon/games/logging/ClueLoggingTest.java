@@ -25,7 +25,7 @@ class ClueLoggingTest {
         setupLevels();
         clueLogging.logFeelingsClue(completeLevel);
 
-        verify(user).getPositionID();
+        verify(user).getPositionId();
     }
 
     @Test
@@ -77,7 +77,7 @@ class ClueLoggingTest {
 
     @BeforeEach
     public void setupUser() {
-        when(user.getPositionID()).thenReturn(USER_POSITION_ID);
+        when(user.getPositionId()).thenReturn(USER_POSITION_ID);
     }
 
     @BeforeEach

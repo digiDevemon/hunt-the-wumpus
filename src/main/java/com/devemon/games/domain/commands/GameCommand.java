@@ -4,5 +4,5 @@ import java.util.Map;
 
 public interface GameCommand {
 
-    void apply(Map<String, Object> level);
+    GameState apply(Map<String, Object> level);
 }

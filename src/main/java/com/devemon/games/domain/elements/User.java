@@ -1,14 +1,14 @@
 package com.devemon.games.domain.elements;
 
 public class User {
-    public Integer getPositionID() {
-        return squareID;
+    public Integer getPositionId() {
+        return squareId;
     }
 
-    public User(Integer squareID) {
+    public User(Integer squareId) {
 
-        this.squareID = squareID;
+        this.squareId = squareId;
     }
 
-    private final Integer squareID;
+    private final Integer squareId;
 }

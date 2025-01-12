@@ -1,11 +1,14 @@
 package com.devemon.games;
 
-import com.devemon.games.logging.ClueLogging;
 import com.devemon.games.domain.GameLoader;
-import com.devemon.games.domain.commands.*;
+import com.devemon.games.domain.commands.Exit;
+import com.devemon.games.domain.commands.Move;
+import com.devemon.games.domain.commands.Shoot;
+import com.devemon.games.domain.commands.Unknown;
 import com.devemon.games.domain.elements.GameMap;
 import com.devemon.games.domain.elements.User;
 import com.devemon.games.keyboard.CommandListener;
+import com.devemon.games.logging.ClueLogging;
 import com.devemon.games.logging.MessagePublisher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +19,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Map;
 
+import static com.devemon.games.domain.commands.GameState.FINISHED;
+import static com.devemon.games.domain.commands.GameState.PLAYING;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -72,7 +77,7 @@ class GameTest {
     }
 
     @Test
-    public void it_should_execute_the_unknown_command_in_dummy_play() {
+    public void it_should_execute_the_unknown_command_in_usual_play() {
         setupCommandListenerUsualPlay();
 
         game.run();
@@ -82,7 +87,7 @@ class GameTest {
     }
 
     @Test
-    public void it_should_execute_the_move_command_in_fail_play() {
+    public void it_should_execute_the_move_command_in_usual_play() {
         setupCommandListenerUsualPlay();
 
         game.run();
@@ -92,33 +97,23 @@ class GameTest {
     }
 
     @Test
-    public void it_should_execute_the_shot_command_in_fail_play() {
+    public void it_should_execute_the_shot_command_in_usual_play() {
         setupCommandListenerUsualPlay();
 
         game.run();
 
-        verify(move, description("It should execute the command"))
+        verify(shot, description("It should execute the command"))
                 .apply(level);
     }
 
     @Test
-    public void it_should_not_execute_the_undefined_command_in_fail_play() {
+    public void it_should_execute_the_exit_command_in_usual_play() {
         setupCommandListenerUsualPlay();
 
         game.run();
 
-        verify(undefinedCommand, never())
+        verify(exit, description("It should execute the command"))
                 .apply(level);
-    }
-
-    @Test
-    public void it_should_notify_you_for_not_allowed_commands_in_fail_play() {
-        setupCommandListenerUsualPlay();
-
-        game.run();
-
-        verify(messagePublisher, description("It should notify you that it is not allowed action now."))
-                .accept(NOT_ALLOWED_MESSAGE);
     }
 
     public void setupCommandListenerDummyPlay() {
@@ -129,13 +124,21 @@ class GameTest {
 
     public void setupCommandListenerUsualPlay() {
         when(commandListener.read())
-                .thenReturn(move).thenReturn(shot).thenReturn(unknown).thenReturn(undefinedCommand).thenReturn(exit);
+                .thenReturn(move).thenReturn(shot).thenReturn(unknown).thenReturn(exit);
     }
 
     @BeforeEach
     public void setupGameLoader() {
         level = Map.of("user", user, "gameMap", gameMap);
         when(gameLoader.load()).thenReturn(level);
+    }
+
+    @BeforeEach
+    public void setupGameCommandResults() {
+        lenient().when(move.apply(any())).thenReturn(PLAYING);
+        lenient().when(shot.apply(any())).thenReturn(PLAYING);
+        lenient().when(unknown.apply(any())).thenReturn(PLAYING);
+        lenient().when(exit.apply(any())).thenReturn(FINISHED);
     }
 
 
@@ -153,9 +156,6 @@ class GameTest {
 
     @Mock
     private Shoot shot;
-
-    @Mock
-    private GameCommand undefinedCommand;
 
     @Mock
     private Exit exit;
@@ -178,6 +178,5 @@ class GameTest {
     private static Map<String, Object> level;
 
     private static final String WELCOME_MESSAGE = "Welcome to hunt the wumpus!";
-    private static final String NOT_ALLOWED_MESSAGE = "Pf.Oak: It is not time to use this!";
 
 }

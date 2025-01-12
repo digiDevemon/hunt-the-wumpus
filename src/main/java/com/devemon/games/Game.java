@@ -1,14 +1,16 @@
 package com.devemon.games;
 
-import com.devemon.games.logging.ClueLogging;
 import com.devemon.games.domain.GameLoader;
 import com.devemon.games.domain.commands.*;
 import com.devemon.games.keyboard.CommandListener;
+import com.devemon.games.logging.ClueLogging;
 import com.devemon.games.logging.MessagePublisher;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
+
+import static com.devemon.games.domain.commands.GameState.PLAYING;
 
 @Component
 public class Game implements Runnable {
@@ -27,17 +29,9 @@ public class Game implements Runnable {
 
             var command = commandListener.read();
 
-            if (command.getClass() == Exit.class) {
-                command.apply(level);
+            if (command.apply(level) != PLAYING) {
                 break;
             }
-
-            if (!ALLOWED_PLAY_COMMANDS.contains(command.getClass())) {
-                messagePublisher.accept("Pf.Oak: It is not time to use this!");
-                break;
-            }
-
-            command.apply(level);
         }
     }
 

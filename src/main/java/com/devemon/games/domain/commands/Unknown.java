@@ -5,12 +5,15 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
+import static com.devemon.games.domain.commands.GameState.PLAYING;
+
 @Component
 public class Unknown implements GameCommand {
 
     @Override
-    public void apply(Map<String, Object> level) {
+    public GameState apply(Map<String, Object> level) {
         messagePublisher.accept(UNKNOWN_PRONTO);
+        return PLAYING;
     }
 
     public Unknown(MessagePublisher messagePublisher) {

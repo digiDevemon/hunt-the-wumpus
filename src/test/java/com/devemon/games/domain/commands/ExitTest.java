@@ -9,17 +9,25 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Map;
 
+import static com.devemon.games.domain.commands.GameState.FINISHED;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.description;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class ExitTest {
 
-
     @Test
     public void it_should_notify_exit_game() {
         exit.apply(LEVEL);
         verify(messagePublisher, description("It should publish exit message")).accept(EXIT_MESSAGE);
+    }
+
+    @Test
+    public void it_should_return_finished_game_state() {
+        assertThat(exit.apply(LEVEL))
+                .as("It should return the expected game state")
+                .isEqualTo(FINISHED);
     }
 
     @Mock

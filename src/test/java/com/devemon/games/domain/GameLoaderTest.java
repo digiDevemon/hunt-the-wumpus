@@ -26,7 +26,7 @@ class GameLoaderTest {
     }
 
     @Test
-    public void it_should_contains_twelve_squares() {
+    public void it_should_contains_twenty_squares() {
         var map = (GameMap) gameLoader.load().get("gameMap");
         assertThat(map.getSquares())
                 .as("It should has twelve squares")
@@ -61,6 +61,14 @@ class GameLoaderTest {
     }
 
     @Test
+    public void it_should_return_user_in_key_user() {
+        assertThat(gameLoader.load())
+                .as("It should contains user in user key")
+                .extracting("user")
+                .isInstanceOf(User.class);
+    }
+
+    @Test
     public void it_should_return_an_user_outside_dangerous_square() {
         var gameLevel = gameLoader.load();
         var map = (GameMap) gameLevel.get("gameMap");
@@ -70,19 +78,11 @@ class GameLoaderTest {
         var wumpusSquares = map.getSquares().stream().filter(square -> square.getThreat().equals(WUMPUS)).map(Square::getId).toList();
 
 
-        assertThat(!holeSquares.contains(user.getPositionID())
-                && !batsSquares.contains(user.getPositionID())
-                && !wumpusSquares.contains(user.getPositionID()))
+        assertThat(!holeSquares.contains(user.getPositionId())
+                && !batsSquares.contains(user.getPositionId())
+                && !wumpusSquares.contains(user.getPositionId()))
                 .as("It should be outside threat square")
                 .isTrue();
-    }
-
-    @Test
-    public void it_should_return_user_in_key_user() {
-        assertThat(gameLoader.load())
-                .as("It should contains user in user key")
-                .extracting("user")
-                .isInstanceOf(User.class);
     }
 
     private static final GameLoader gameLoader = new GameLoader();
