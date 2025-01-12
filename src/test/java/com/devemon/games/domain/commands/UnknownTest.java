@@ -9,7 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Map;
 
-import static com.devemon.games.domain.commands.GameState.PLAYING;
+import static com.devemon.games.domain.elements.GameState.PLAYING;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.description;
 import static org.mockito.Mockito.verify;
@@ -27,6 +27,7 @@ class UnknownTest {
     public void it_should_return_playing_game_state() {
         assertThat(unknown.apply(LEVEL))
                 .as("It should return the expected game state")
+                .extracting("state")
                 .isEqualTo(PLAYING);
     }
 
@@ -36,6 +37,6 @@ class UnknownTest {
     @InjectMocks
     private Unknown unknown;
 
-    private static final Map<String, Object> LEVEL = Map.of();
+    private static final Map<String, Object> LEVEL = Map.of("state", PLAYING);
     private static final String UNKNOWN_PRONTO = "Sorry, command not found";
 }

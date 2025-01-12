@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-import static com.devemon.games.domain.commands.GameState.PLAYING;
+import static com.devemon.games.domain.elements.GameState.PLAYING;
 
 @Component
 public class Game implements Runnable {
@@ -26,8 +26,8 @@ public class Game implements Runnable {
             clueLogging.logNearRooms(level);
 
             var command = commandListener.read();
-
-            if (command.apply(level) != PLAYING) {
+            var gameState = command.apply(level).get("state");
+            if (gameState != PLAYING) {
                 break;
             }
         }

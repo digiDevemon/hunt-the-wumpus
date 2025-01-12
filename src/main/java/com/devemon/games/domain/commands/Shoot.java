@@ -4,14 +4,12 @@ import com.devemon.games.logging.MessagePublisher;
 
 import java.util.Map;
 
-import static com.devemon.games.domain.commands.GameState.PLAYING;
-
 public class Shoot implements GameCommand {
 
     @Override
-    public GameState apply(Map<String, Object> level) {
+    public Map<String, Object> apply(Map<String, Object> level) {
         System.out.println("Shot to " + this.squareId);
-        return PLAYING;
+        return level;
     }
 
     public Shoot(MessagePublisher messagePublisher, Integer square) {

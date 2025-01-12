@@ -5,10 +5,14 @@ public class User {
         return squareId;
     }
 
+    public void setPositionId(Integer newPositionId) {
+        this.squareId = newPositionId;
+    }
+
     public User(Integer squareId) {
 
         this.squareId = squareId;
     }
 
-    private final Integer squareId;
+    private Integer squareId;
 }

@@ -19,8 +19,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Map;
 
-import static com.devemon.games.domain.commands.GameState.FINISHED;
-import static com.devemon.games.domain.commands.GameState.PLAYING;
+import static com.devemon.games.domain.elements.GameState.FINISHED;
+import static com.devemon.games.domain.elements.GameState.PLAYING;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -129,16 +129,16 @@ class GameTest {
 
     @BeforeEach
     public void setupGameLoader() {
-        level = Map.of("user", user, "gameMap", gameMap);
+        level = Map.of("user", user, "gameMap", gameMap, "state", PLAYING);
         when(gameLoader.load()).thenReturn(level);
     }
 
     @BeforeEach
     public void setupGameCommandResults() {
-        lenient().when(move.apply(any())).thenReturn(PLAYING);
-        lenient().when(shot.apply(any())).thenReturn(PLAYING);
-        lenient().when(unknown.apply(any())).thenReturn(PLAYING);
-        lenient().when(exit.apply(any())).thenReturn(FINISHED);
+        lenient().when(move.apply(any())).thenReturn(Map.of("user", user, "gameMap", gameMap, "state", PLAYING));
+        lenient().when(shot.apply(any())).thenReturn(Map.of("user", user, "gameMap", gameMap, "state", PLAYING));
+        lenient().when(unknown.apply(any())).thenReturn(Map.of("user", user, "gameMap", gameMap, "state", PLAYING));
+        lenient().when(exit.apply(any())).thenReturn(Map.of("user", user, "gameMap", gameMap, "state", FINISHED));
     }
 
 

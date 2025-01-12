@@ -1,17 +1,19 @@
 package com.devemon.games.domain.commands;
 
+import com.devemon.games.domain.elements.GameState;
 import com.devemon.games.logging.MessagePublisher;
 
+import java.util.HashMap;
 import java.util.Map;
-
-import static com.devemon.games.domain.commands.GameState.FINISHED;
 
 public class Exit implements GameCommand {
 
     @Override
-    public GameState apply(Map<String, Object> level) {
+    public Map<String, Object> apply(Map<String, Object> level) {
         messagePublisher.accept("Exit game...");
-        return FINISHED;
+        var newLevel = new HashMap<>(level);
+        newLevel.put("state", GameState.FINISHED);
+        return newLevel;
     }
 
     public Exit(MessagePublisher messagePublisher) {

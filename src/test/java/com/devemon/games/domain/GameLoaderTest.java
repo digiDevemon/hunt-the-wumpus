@@ -5,6 +5,7 @@ import com.devemon.games.domain.elements.Square;
 import com.devemon.games.domain.elements.User;
 import org.junit.jupiter.api.Test;
 
+import static com.devemon.games.domain.elements.GameState.PLAYING;
 import static com.devemon.games.domain.elements.SquareState.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -66,6 +67,14 @@ class GameLoaderTest {
                 .as("It should contains user in user key")
                 .extracting("user")
                 .isInstanceOf(User.class);
+    }
+
+    @Test
+    public void it_should_return_playing_in_key_state() {
+        assertThat(gameLoader.load())
+                .as("It should contains playing in state key")
+                .extracting("state")
+                .isEqualTo(PLAYING);
     }
 
     @Test

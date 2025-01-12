@@ -9,7 +9,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Map;
 
-import static com.devemon.games.domain.commands.GameState.FINISHED;
+import static com.devemon.games.domain.elements.GameState.FINISHED;
+import static com.devemon.games.domain.elements.GameState.PLAYING;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.description;
 import static org.mockito.Mockito.verify;
@@ -27,6 +28,7 @@ class ExitTest {
     public void it_should_return_finished_game_state() {
         assertThat(exit.apply(LEVEL))
                 .as("It should return the expected game state")
+                .extracting("state")
                 .isEqualTo(FINISHED);
     }
 
@@ -37,5 +39,5 @@ class ExitTest {
     private Exit exit;
 
     private static final String EXIT_MESSAGE = "Exit game...";
-    private static final Map<String, Object> LEVEL = Map.of();
+    private static final Map<String, Object> LEVEL = Map.of("state", PLAYING);
 }

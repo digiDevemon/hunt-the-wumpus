@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+import static com.devemon.games.domain.elements.GameState.PLAYING;
 import static com.devemon.games.domain.elements.Square.SquareBuilder;
 import static com.devemon.games.domain.elements.SquareState.*;
 
@@ -18,7 +19,7 @@ public class GameLoader {
     public Map<String, Object> load() {
         var gameMap = buildMap();
         var user = buildUser(gameMap);
-        return Map.of("user", user, "gameMap", gameMap);
+        return Map.of("user", user, "gameMap", gameMap, "state", PLAYING);
     }
 
     private GameMap buildMap() {

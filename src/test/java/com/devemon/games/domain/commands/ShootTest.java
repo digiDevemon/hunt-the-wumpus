@@ -6,7 +6,7 @@ import org.mockito.Mock;
 
 import java.util.Map;
 
-import static com.devemon.games.domain.commands.GameState.PLAYING;
+import static com.devemon.games.domain.elements.GameState.PLAYING;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ShootTest {
@@ -23,7 +23,8 @@ class ShootTest {
     public void it_should_return_playing_game_state() {
         setupMoveCommand();
         assertThat(shoot.apply(LEVEL))
-                .as("It should not return null")
+                .as("It should return the expected game state")
+                .extracting("state")
                 .isEqualTo(PLAYING);
     }
 
@@ -36,6 +37,6 @@ class ShootTest {
     private MessagePublisher messagePublisher;
 
     private final Integer SHOOT_TARGET_ID = 2;
-    private final Map<String, Object> LEVEL = Map.of();
+    private final Map<String, Object> LEVEL = Map.of("state", PLAYING);
     private Shoot shoot;
 }
