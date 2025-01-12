@@ -1,13 +1,11 @@
 package com.devemon.games;
 
 import com.devemon.games.domain.GameLoader;
-import com.devemon.games.domain.commands.*;
 import com.devemon.games.keyboard.CommandListener;
 import com.devemon.games.logging.ClueLogging;
 import com.devemon.games.logging.MessagePublisher;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Map;
 
 import static com.devemon.games.domain.commands.GameState.PLAYING;
@@ -46,6 +44,4 @@ public class Game implements Runnable {
     private final CommandListener commandListener;
     private final GameLoader gameLoader;
     private final ClueLogging clueLogging;
-
-    private static final List<Class<? extends GameCommand>> ALLOWED_PLAY_COMMANDS = List.of(Unknown.class, Move.class, Shoot.class);
 }
