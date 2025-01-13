@@ -1,6 +1,7 @@
 package com.devemon.games.keyboard;
 
 import com.devemon.games.domain.commands.*;
+import com.devemon.games.domain.commands.movements.Move;
 import com.devemon.games.keyboard.commandAssemblers.ExitAssembler;
 import com.devemon.games.keyboard.commandAssemblers.MoveAssembler;
 import com.devemon.games.keyboard.commandAssemblers.ShootAssembler;

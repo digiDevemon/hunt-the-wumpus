@@ -1,7 +1,7 @@
 package com.devemon.games.keyboard.commandAssemblers;
 
 import com.devemon.games.domain.commands.GameCommand;
-import com.devemon.games.domain.commands.Move;
+import com.devemon.games.domain.commands.movements.Move;
 import com.devemon.games.logging.MessagePublisher;
 import org.springframework.stereotype.Component;
 
