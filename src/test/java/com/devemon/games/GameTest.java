@@ -2,7 +2,7 @@ package com.devemon.games;
 
 import com.devemon.games.domain.GameLoader;
 import com.devemon.games.domain.commands.Exit;
-import com.devemon.games.domain.commands.movements.Move;
+import com.devemon.games.domain.commands.Move;
 import com.devemon.games.domain.commands.Shoot;
 import com.devemon.games.domain.commands.Unknown;
 import com.devemon.games.domain.elements.GameMap;

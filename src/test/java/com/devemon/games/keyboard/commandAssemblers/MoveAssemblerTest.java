@@ -1,6 +1,6 @@
 package com.devemon.games.keyboard.commandAssemblers;
 
-import com.devemon.games.domain.commands.movements.Move;
+import com.devemon.games.domain.commands.Move;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;

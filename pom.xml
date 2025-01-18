@@ -5,7 +5,7 @@
 
   <groupId>com.devemon.games</groupId>
   <artifactId>hunt-the-wumpus</artifactId>
-  <version>1.10.0-SNAPSHOT</version>
+  <version>1.11.0-SNAPSHOT</version>
 
   <name>hunt-the-wumpus</name>
   <url>http://www.example.com</url>

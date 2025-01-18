@@ -1,6 +1,5 @@
 package com.devemon.games.domain.commands;
 
-import com.devemon.games.domain.commands.movements.Move;
 import com.devemon.games.domain.elements.GameMap;
 import com.devemon.games.domain.elements.Square;
 import com.devemon.games.domain.elements.User;
@@ -79,6 +78,40 @@ class MoveTest {
                 .isEqualTo(FINISHED);
     }
 
+    @ParameterizedTest
+    @MethodSource("dangerousSquares")
+    public void it_should_log_when_is_finished(Square targetSquare) {
+        setupMoveCommand(targetSquare.getId());
+        move.apply(LEVEL);
+        verify(messagePublisher).accept(FINISHED_MESSAGE);
+    }
+
+    @Test
+    public void it_should_teleport_user_when_bat_square_is_reached() {
+        setupMoveCommand(BATS_SQUARE.getId());
+        var user = (User) move.apply(LEVEL).get("user");
+
+        assertThat(user.getPositionId())
+                .as("It should return the user position")
+                .isIn(List.of(NOT_DANGEROUS_SQUARE.getId(), NOT_REACHEABLE_SQUARE.getId()));
+    }
+
+    @Test
+    public void it_should_return_the_expected_level_state() {
+        setupMoveCommand(BATS_SQUARE.getId());
+        assertThat(move.apply(LEVEL))
+                .as("It should return the expected game state")
+                .extracting("state")
+                .isEqualTo(PLAYING);
+    }
+
+    @Test
+    public void it_should_log_when_is_finished() {
+        setupMoveCommand(BATS_SQUARE.getId());
+        move.apply(LEVEL);
+        verify(messagePublisher).accept(TELEPORT_MESSAGE);
+    }
+
     public void setupMoveCommand(Integer targetId) {
         this.move = new Move(messagePublisher, targetId);
     }
@@ -112,7 +145,10 @@ class MoveTest {
             .build();
     private final User USER = new User(INITIAL_SQUARE.getId());
 
-    private final String NOT_REACHABLE_SQUARE_MESSAGE = "This room is not reachable from your current position";
+    private static final String NOT_REACHABLE_SQUARE_MESSAGE = "This room is not reachable from your current position";
+    private static final String FINISHED_MESSAGE = "You dead";
+    private static final String TELEPORT_MESSAGE = "You run away escaping from bats";
+
 
     private final Map<String, Object> LEVEL = Map.of("user", USER, "gameMap", GAME_MAP, "state", PLAYING);
     private Move move;
