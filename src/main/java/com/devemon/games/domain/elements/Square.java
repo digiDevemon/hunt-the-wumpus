@@ -25,9 +25,13 @@ public class Square {
         return this.id;
     }
 
+    public void setThreat(SquareState squareState) {
+        this.squareState = squareState;
+    }
+
 
     private final List<Integer> connections;
-    private final SquareState squareState;
+    private SquareState squareState;
     private final Integer id;
 
 

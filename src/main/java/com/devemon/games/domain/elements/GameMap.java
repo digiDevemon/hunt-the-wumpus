@@ -21,7 +21,7 @@ public class GameMap {
                 .collect(Collectors.toList());
     }
 
-    private Square getSquareFromID(Integer id) {
+    public Square getSquareFromID(Integer id) {
         return squares.stream()
                 .filter(square -> id.equals(square.getId()))
                 .findFirst()
