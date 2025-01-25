@@ -9,4 +9,4 @@ Run the app
 
 cd /target
 
-java -cp robot-<version>.jar com.devemon.games.App <absolute path file commands>
+java -cp hunt-the-wumpus-[version].jar com.devemon.games.App <absolute path file commands>
