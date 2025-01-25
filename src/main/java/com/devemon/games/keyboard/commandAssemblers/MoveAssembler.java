@@ -16,7 +16,7 @@ public class MoveAssembler implements CommandAssembler {
         var pattern = Pattern.compile(ACCEPTED_PATTERN);
         var matcher = pattern.matcher(keyboardInput);
 
-        if (!matcher.matches()) {
+        if (!matcher.matches()|| keyboardInput.isBlank()) {
             return Optional.empty();
         }
 

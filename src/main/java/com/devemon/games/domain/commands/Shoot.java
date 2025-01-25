@@ -5,11 +5,9 @@ import com.devemon.games.domain.elements.Square;
 import com.devemon.games.domain.elements.User;
 import com.devemon.games.logging.MessagePublisher;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
+import static com.devemon.games.domain.elements.GameState.FINISHED;
 import static com.devemon.games.domain.elements.SquareState.NONE;
 import static com.devemon.games.domain.elements.SquareState.WUMPUS;
 
@@ -38,12 +36,25 @@ public class Shoot implements GameCommand {
                 .get();
 
         if (targetSquare.getThreat().equals(WUMPUS)) {
-            return level;
+            messagePublisher.accept("You hear a roar. You have slide a wumpus.");
+            return shootWumpus(level, targetSquare, map);
         }
 
         moveWumpus(map, userPositionId);
         messagePublisher.accept("You failed the shoot. You listen steps somewhere.");
         return level;
+    }
+
+    private Map<String, Object> shootWumpus(Map<String, Object> level, Square targetSquare, GameMap map) {
+        var newLevel = new HashMap<>(level);
+
+        targetSquare.setThreat(NONE);
+        var wumpusSquares = map.getSquares().stream().filter(square -> square.getThreat().equals(WUMPUS)).toList();
+        if (wumpusSquares.isEmpty()) {
+            messagePublisher.accept("You killed all the wumpus. You WIN!");
+            newLevel.put("state", FINISHED);
+        }
+        return newLevel;
     }
 
     private void moveWumpus(GameMap map, Integer userPositionId) {

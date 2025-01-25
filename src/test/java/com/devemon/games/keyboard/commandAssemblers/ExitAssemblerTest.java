@@ -50,6 +50,13 @@ class ExitAssemblerTest {
                 .isEmpty();
     }
 
+    @Test
+    public void it_should_return_optional_empty_from_blank_command() {
+        assertThat(exitAssembler.apply(BLANK_COMMAND))
+                .as("It should return empty command")
+                .isEmpty();
+    }
+
 
     private static List<String> acceptedCommands() {
         return List.of(
@@ -67,4 +74,6 @@ class ExitAssemblerTest {
     private static final String LOWER_ACCEPTED_COMMAND = "exit";
     private static final String RANDOM_CASE_ACCEPTED_COMMAND = "eXiT";
     private static final String NOT_ACCEPTED_COMMAND = "x9";
+    private static final String BLANK_COMMAND = " ";
+
 }
