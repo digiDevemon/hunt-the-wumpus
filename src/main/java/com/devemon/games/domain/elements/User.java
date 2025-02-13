@@ -9,10 +9,25 @@ public class User {
         this.squareId = newPositionId;
     }
 
-    public User(Integer squareId) {
+    public void popAmmunition(){
+        ammunition = ammunition-1;
+    }
 
+    public Integer getAmmunition() {
+        return ammunition;
+    }
+
+    public User(Integer squareId) {
         this.squareId = squareId;
     }
 
+    public User(Integer squareId, Integer ammunition) {
+        this.squareId = squareId;
+        this.ammunition = ammunition;
+    }
+
     private Integer squareId;
+
+    private Integer ammunition = 3;
+
 }

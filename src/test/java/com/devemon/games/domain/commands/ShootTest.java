@@ -38,6 +38,26 @@ class ShootTest {
                 .isEqualTo(PLAYING);
     }
 
+
+    @Test
+    public void it_should_subtract_ammunition_from_user(){
+        setupShootCommand(NOT_DANGEROUS_SQUARE_ID);
+        var user = (User) shoot.apply(getLevel(getGameMap())).get("user");
+
+        assertThat(user.getAmmunition())
+                .as("It should subtract the ammunition")
+                .isEqualTo(2);
+    }
+
+    @Test
+    public void it_should_log_not_enough_ammunition() {
+        setupShootCommand(NOT_DANGEROUS_SQUARE_ID);
+        var user = new User(INITIAL_SQUARE_ID, 0);
+        shoot.apply(getLevel(getGameMap(), user));
+        verify(messagePublisher).accept(NO_AMMUNITION_MESSAGE);
+    }
+
+
     @Test
     public void it_should_log_not_reachable_square_shot() {
         setupShootCommand(NOT_REACHEABLE_SQUARE_ID);
@@ -165,11 +185,13 @@ class ShootTest {
                 .build();
     }
 
-    public Map<String, Object> getLevel(GameMap gameMap) {
-        return Map.of("user", new User(INITIAL_SQUARE_ID), "gameMap", gameMap, "state", PLAYING);
-
+    public Map<String, Object> getLevel(GameMap gameMap, User user) {
+        return Map.of("user", user, "gameMap", gameMap, "state", PLAYING);
     }
 
+    public Map<String, Object> getLevel(GameMap gameMap) {
+        return Map.of("user", new User(INITIAL_SQUARE_ID), "gameMap", gameMap, "state", PLAYING);
+    }
 
     @Mock
     private MessagePublisher messagePublisher;
@@ -186,6 +208,7 @@ class ShootTest {
     private static final String WUMPUS_MOVEMENT_CLUE = "You failed the shoot. You listen steps somewhere.";
     private static final String WUMPUS_SUCESS_SHOOT_MESSAGE = "You hear a roar. You have slide a wumpus.";
     private static final String WIN_MESSAGE = "You killed all the wumpus. You WIN!";
+    private static final String NO_AMMUNITION_MESSAGE = "Not enough ammunition to shoot";
 
     private Shoot shoot;
 }

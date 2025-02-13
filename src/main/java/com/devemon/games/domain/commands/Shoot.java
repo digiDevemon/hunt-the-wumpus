@@ -26,21 +26,27 @@ public class Shoot implements GameCommand {
             return level;
         }
 
-        return shoot(level, reachableSquares, map, user.getPositionId());
+        if (user.getAmmunition().equals(0)){
+            messagePublisher.accept("Not enough ammunition to shoot");
+            return level;
+        }
+
+        return shoot(level, reachableSquares, map, user);
     }
 
-    private Map<String, Object> shoot(Map<String, Object> level, List<Square> reachableSquares, GameMap map, Integer userPositionId) {
+    private Map<String, Object> shoot(Map<String, Object> level, List<Square> reachableSquares, GameMap map, User user) {
         var targetSquare = reachableSquares.stream()
                 .filter(square -> square.getId().equals(targetSquareId))
                 .findFirst()
                 .get();
 
+        user.popAmmunition();
         if (targetSquare.getThreat().equals(WUMPUS)) {
             messagePublisher.accept("You hear a roar. You have slide a wumpus.");
             return shootWumpus(level, targetSquare, map);
         }
 
-        moveWumpus(map, userPositionId);
+        moveWumpus(map, user.getPositionId());
         messagePublisher.accept("You failed the shoot. You listen steps somewhere.");
         return level;
     }
